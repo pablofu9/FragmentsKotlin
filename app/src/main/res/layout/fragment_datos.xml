@@ -5,10 +5,40 @@
     android:layout_height="match_parent"
     tools:context=".fragments.FragmentDatos">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:id="@+id/txtNombre"
+            android:layout_gravity="center"
+            android:layout_margin="7dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apellidos"
+            android:id="@+id/txtApellidos"
+            android:layout_gravity="center"
+            android:layout_margin="7dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dni"
+            android:id="@+id/txtDni"
+            android:layout_gravity="center"
+            android:layout_margin="7dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DELEGADO"
+            android:id="@+id/btnDelegado"
+            android:layout_gravity="center"
+            android:layout_margin="7dp"/>
+    </LinearLayout>
 
 </FrameLayout>

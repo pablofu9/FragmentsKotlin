@@ -40,8 +40,9 @@ class Alumno: java.io.Serializable {
     }
 
     override fun toString(): String {
-        return "Alumno(name='$name', apellido='$apellido', DNI='$DNI', isImage=$isImage, text=$text, imageId=$imageId)"
+        return name
     }
+
 
 
 }
