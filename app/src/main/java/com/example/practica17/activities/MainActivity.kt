@@ -27,10 +27,10 @@ class MainActivity : AppCompatActivity(), OnFragmentEventListener, View.OnClickL
         setContentView(R.layout.activity_main)
         spinner=findViewById(R.id.spinner)
         alumnos= ArrayList<Alumno>()
-        alumnos.add(Alumno("Juan","Lopez","71183498e",1))
-        alumnos.add(Alumno("Pedro","Dominguez","78876392W",2))
-        alumnos.add(Alumno("Lucia","Ruiz","78893872e",2))
-        alumnos.add(Alumno("Maria","Martin","8987762T",2))
+        alumnos.add(Alumno("Juan","Lopez","71183498e",R.drawable.chico1))
+        alumnos.add(Alumno("Pedro","Dominguez","78876392W",R.drawable.chico2))
+        alumnos.add(Alumno("Lucia","Ruiz","78893872e",R.drawable.chica1))
+        alumnos.add(Alumno("Maria","Martin","8987762T",R.drawable.chica2))
 
         val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, alumnos)
         spinner.adapter=adapter
@@ -52,10 +52,19 @@ class MainActivity : AppCompatActivity(), OnFragmentEventListener, View.OnClickL
     }
 
     override fun onClick(v: View?) {
-        val transaction = manager.beginTransaction()
+
         when(v?.id){
             R.id.btnDatos->{
+                /**
+                 * Para pasar la info de la activity al fragment lo que hacemos es:
+                 * Creamos un bundle y se lo pasamos como argumentos al fragmento
+                 */
                 frag1=false
+                val bundle = Bundle()
+                val alumno = spinner.selectedItem as Alumno
+                val transaction = manager.beginTransaction()
+                bundle.putSerializable("alumno", alumno)
+                fragmento1.arguments=bundle
                 transaction.replace(R.id.frame, fragmento1)
                 /**
                  * El addToBackStack lo ponemos para que guarde la informacion de los clicks que le hemos dados
@@ -67,6 +76,14 @@ class MainActivity : AppCompatActivity(), OnFragmentEventListener, View.OnClickL
             }
             R.id.btnFoto->{
                 frag1=true
+                val transaction = manager.beginTransaction()
+                //Creamos el bundle
+                val args = Bundle()
+                //Sacamos mediante una variable el alumno seleccionado para poder selccionar el id de la foto
+                val alumno = spinner.selectedItem as Alumno
+                args.putInt(resources.getString(R.string.image), alumno.imageId)
+                fragmento2.arguments=args
+                //Le pasamos el id mediante argumentos para recogerlo en el fragment
                 transaction.replace(R.id.frame, fragmento2)
                 transaction.addToBackStack(null)
                 transaction.commit()
