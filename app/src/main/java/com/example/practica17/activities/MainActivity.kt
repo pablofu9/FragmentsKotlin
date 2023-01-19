@@ -13,60 +13,64 @@ import com.example.practica17.fragments.FragmentFotos
 import com.example.practica17.interfaces.OnFragmentEventListener
 import com.example.practica17.model.Alumno
 
-class MainActivity : AppCompatActivity(), OnFragmentEventListener {
+class MainActivity : AppCompatActivity(), OnFragmentEventListener, View.OnClickListener {
     private lateinit var alumnos:ArrayList<Alumno>
     private lateinit var spinner:Spinner
     private lateinit var btnDatos:Button
     private lateinit var btnFotos:Button
+    val fragmento1 = FragmentDatos()
+    val fragmento2 = FragmentFotos()
+    val manager = supportFragmentManager
+    var frag1=true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         spinner=findViewById(R.id.spinner)
         alumnos= ArrayList<Alumno>()
-            alumnos.add(Alumno("Juan","Lopez","71183498e",1))
-            alumnos.add(Alumno("Pedro","Dominguez","78876392W",2))
-            alumnos.add(Alumno("Lucia","Ruiz","78893872e",2))
-            alumnos.add(Alumno("Maria","Martin","8987762T",2))
+        alumnos.add(Alumno("Juan","Lopez","71183498e",1))
+        alumnos.add(Alumno("Pedro","Dominguez","78876392W",2))
+        alumnos.add(Alumno("Lucia","Ruiz","78893872e",2))
+        alumnos.add(Alumno("Maria","Martin","8987762T",2))
 
         val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, alumnos)
         spinner.adapter=adapter
 
-        /**var fragment: Fragment? = null
-         * fragment = ImageFragment()
-        val args = Bundle()
-        args.putInt(resources.getString(R.string.image), item.imageId)
-        fragment.arguments = args
-        // Añade el fragmento
-        val fragmentManager = supportFragmentManager
-        val transaction = fragmentManager.beginTransaction()
-        transaction.add(R.id.layout, fragment)
-        transaction.commit()
-         */
         btnDatos=findViewById(R.id.btnDatos)
         btnFotos=findViewById(R.id.btnFoto)
 
+        btnDatos.setOnClickListener(this)
+        btnFotos.setOnClickListener(this)
     }
 
-    var frag1=true
-    fun cambiarFragment(view: View){
-        val fragmento1 = FragmentDatos()
-        val fragmento2 = FragmentFotos()
-        val manager = supportFragmentManager
-        val transaction = manager.beginTransaction()
-        if(frag1){
-            frag1=false
-            transaction.replace(R.id.frame, fragmento1)
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }else{
-            transaction.replace(R.id.frame, fragmento2)
-            transaction.addToBackStack(null)
-            transaction.commit()
-        }
 
-    }
+
+
+
 
     override fun onFragmentEvent(alumno: Alumno) {
 
+    }
+
+    override fun onClick(v: View?) {
+        val transaction = manager.beginTransaction()
+        when(v?.id){
+            R.id.btnDatos->{
+                frag1=false
+                transaction.replace(R.id.frame, fragmento1)
+                /**
+                 * El addToBackStack lo ponemos para que guarde la informacion de los clicks que le hemos dados
+                 * Si cambiamos muchas veces entre fragments y luego vamos para atras, lo que tiene que pasar
+                 * es que volvamos hacia atras todas la veces que le hemos dado anteriormente
+                 */
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+            R.id.btnFoto->{
+                frag1=true
+                transaction.replace(R.id.frame, fragmento2)
+                transaction.addToBackStack(null)
+                transaction.commit()
+            }
+        }
     }
 }
