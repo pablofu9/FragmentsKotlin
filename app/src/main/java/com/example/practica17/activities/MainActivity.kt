@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.practica17.R
 import com.example.practica17.fragments.FragmentDatos
@@ -18,6 +19,7 @@ class MainActivity : AppCompatActivity(), OnFragmentEventListener, View.OnClickL
     private lateinit var spinner:Spinner
     private lateinit var btnDatos:Button
     private lateinit var btnFotos:Button
+    private lateinit var txtDelegado :TextView
     val fragmento1 = FragmentDatos()
     val fragmento2 = FragmentFotos()
     val manager = supportFragmentManager
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity(), OnFragmentEventListener, View.OnClickL
 
         val adapter = ArrayAdapter(this,android.R.layout.simple_spinner_item, alumnos)
         spinner.adapter=adapter
-
+        txtDelegado=findViewById(R.id.txtDelegado)
         btnDatos=findViewById(R.id.btnDatos)
         btnFotos=findViewById(R.id.btnFoto)
 
@@ -47,8 +49,9 @@ class MainActivity : AppCompatActivity(), OnFragmentEventListener, View.OnClickL
 
 
 
-    override fun onFragmentEvent(alumno: Alumno) {
-
+    override fun onFragmentEvent(nombre: String) {
+        //Recogemos el nombre del textview de nombre del fragment y se lo ponemos al textview de delegado
+        txtDelegado.text=nombre
     }
 
     override fun onClick(v: View?) {
